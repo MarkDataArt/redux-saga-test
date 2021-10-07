@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const dispatch = useDispatch();
+	const { names } = useSelector(state => state.names);
+	const { song } = useSelector(state => state.songData);
+	useEffect(() => {
+		dispatch({type: 'SET_NAMES'});
+		dispatch({type: 'SET_SONG'});
+	}, [dispatch]);
+	return (
+		<div className='App'>
+			<div style={{width: 300}}>
+				{ names?.map(item => <li>{item.name}</li>) }
+				<hr />
+				{ song?.map(item => <li>{item.name}</li>) }
+			</div>
+		</div>
+	);
 }
 
 export default App;
